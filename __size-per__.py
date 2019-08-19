@@ -2,7 +2,8 @@
 
 import os, sys
 
-scan = list(os.scandir())
+scanner = os.scandir()
+scan = list(scanner)
 size = 0
 
 
@@ -11,6 +12,7 @@ def calculo():
 	arr = [arq for arq in scan if arq.name == target]
 	index = scan.index(arr[0])
 	size = list(scan[index].stat())[6]
+	scanner.close()
 	print(f"{size} Bytes")
 
 
