@@ -1,37 +1,36 @@
 #!/usr/bin/python3
+# -*- coding: utf-8 -*-
 
-import os, sys
-
-scanner = os.scandir()
-scan = list(scanner)
-size = 0
+import os
+import sys
 
 
-def calculo():
-	global size
-	arr = [arq for arq in scan if arq.name == target]
-	index = scan.index(arr[0])
-	size = list(scan[index].stat())[6]
-	scanner.close()
-	print(f"{size} Bytes")
+def show_size(target_def, type_def):
+    if type_def == '-k':
+        print(f"{round(os.path.getsize(target_def) / 1000, 5)} Kilobytes")
+        return
+    if type_def == '-m':
+        print(f"{round(os.path.getsize(target_def) / 1_000_000, 5)} Megabytes")
+        return
+    if type_def == '-g':
+        print(f"{round(os.path.getsize(target_def) / 1_000_000_000, 5)} Gigabytes")
+        return
+    if type_def == '-h' or type_def == '--help':
+        print("USE -g to Gigabytes -> python3 __size-per__.py -g [TARGET]")
+        print("USE -m to Megabytes -> python3 __size-per__.py -m [TARGET]")
+        print("USE -k to Kilobytes -> python3 __size-per__.py -k [TARGET]")
+        print("WARNING: only python 3.7+.")
 
 
 try:
-	tipo = str(sys.argv[1])
-	target = str(sys.argv[2])
-	if tipo == '-k':
-		calculo()
-		print(f"{size / 1000} Kilobytes")
-	if tipo == '-m':
-		calculo()
-		print(f"{size / 1_000_000} Megabytes")
-	if tipo == '-g':
-		calculo()
-		print(f"{size / 1_000_000_000} Gigabytes")
-except IndexError:
-	print("USE -g para Gigabytes -> python3 __size-per__.py -g [TARGET]")
-	print("USE -m para Megabytes -> python3 __size-per__.py -m [TARGET]")
-	print("USE -k para Kilobytes -> python3 __size-per__.py -k [TARGET]")
-	print("AVISO: Somente python 3.7+.")
+    type_ret = str(sys.argv[1])
+    target_ret = str(sys.argv[2])
 
+except IndexError:
+    print("USE -g to Gigabytes -> python3 __size-per__.py -g [TARGET]")
+    print("USE -m to Megabytes -> python3 __size-per__.py -m [TARGET]")
+    print("USE -k to Kilobytes -> python3 __size-per__.py -k [TARGET]")
+    print("WARNING: only python 3.7+.")
+else:
+    show_size(target_ret, type_ret)
 
